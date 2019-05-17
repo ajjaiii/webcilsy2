@@ -1,19 +1,23 @@
-pipeline {
-  agent {
-    docker {
-      image 'ajjaiii/webcilsy'
+pipeline { 
+    agent any 
+    options {
+        skipStagesAfterUnstable()
     }
-
-  }
-  stages {
-    stage('Build') {
-      steps {
-        sh '''docker build . -t webcilsy
-docker tag webcilsy ajjaiii/webcilsy:$BUILD_NUMBER
-docker push ajjaiii/webcilsy:$BUILD_NUMBER
-
-docker run -d -p 80:80 --name webcilsy ajjaiii/webcilsy:$BUILD_NUMBER'''
-      }
+    stages {
+        stage('Build') { 
+            steps { 
+                echo 'Check in' 
+            }
+        }
+        stage('Test'){
+            steps {
+                echo ' Testing' 
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'deploy'
+            }
+        }
     }
-  }
 }
