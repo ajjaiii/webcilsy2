@@ -9,8 +9,8 @@ pipeline {
                 echo 'Check in'
                 sh 'sed -i "s/BUILD_NUMBER/$BUILD_NUMBER/g" webcilsy.yaml'
                 sh 'docker build -t webcilsy .'
-                sh 'docker tag webcilsy ajjjaiii/webcilsy:$BUILD_NUMBER'
-                sh 'docker push ajjjaiii/webcilsy:$BUILD_NUMBER'
+                sh 'docker tag webcilsy ajjaiii/webcilsy:$BUILD_NUMBER'
+                sh 'docker push ajjaiii/webcilsy:$BUILD_NUMBER'
             }
         }
         stage('Test'){
