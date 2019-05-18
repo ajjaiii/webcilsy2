@@ -11,6 +11,7 @@ pipeline {
                 sh 'docker build -t webcilsy .'
                 sh 'docker tag webcilsy ajjaiii/webcilsy:$BUILD_NUMBER'
                 sh 'docker push ajjaiii/webcilsy:$BUILD_NUMBER'
+                sh 'docker image prune -fa'
             }
         }
         stage('Test'){
