@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webcilsy
+  labels:
+    app: webcilsy
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: webcilsy
+  template:
+    metadata:
+      labels:
+        app: webcilsy
+    spec:
+      containers:
+      - name: webcilsy
+        image: ajjaiii/webcilsy
+        ports:
+        - containerPort: 80
