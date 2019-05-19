@@ -11,13 +11,12 @@ pipeline {
                 sh 'docker build -t webcilsy .'
                 sh 'docker tag webcilsy ajjaiii/webcilsy:$BUILD_NUMBER'
                 sh 'docker push ajjaiii/webcilsy:$BUILD_NUMBER'
-                sh 'docker image prune -fa'
             }
         }
-        stage('Test'){
+        stage('Cleaning'){
             steps {
-                echo 'Show running pods'
-                sh 'kubectl get pods'
+                echo 'Cleaning image'
+                sh 'docker image prune -fa'
             }
         }
         stage('Deploy') {
