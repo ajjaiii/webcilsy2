@@ -17,7 +17,7 @@ pipeline {
         stage('Test'){
             steps {
                 echo 'Show running pods'
-                sh 'kubectl get pods'
+                sh 'kubectl get pod'
             }
         }
         stage('Deploy') {
