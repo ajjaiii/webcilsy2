@@ -8,9 +8,9 @@ pipeline {
             steps { 
                 echo 'Building New Image'
                 sh 'sed -i "s/BUILD_NUMBER/$BUILD_NUMBER/g" webcilsy.yaml'
-                sh 'docker build -t webcilsy .'
-                sh 'docker tag webcilsy ajjaiii/webcilsy:$BUILD_NUMBER'
-                sh 'docker push ajjaiii/webcilsy:$BUILD_NUMBER'
+                sh 'docker build -t webcilsypro .'
+                sh 'docker tag webcilsypro ajjaiii/webcilsypro:$BUILD_NUMBER'
+                sh 'docker push ajjaiii/webcilsypro:$BUILD_NUMBER'
                
             }
         }
