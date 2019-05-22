@@ -7,8 +7,9 @@ pipeline {
         stage('Build') { 
             steps { 
                 echo 'Building New Image'
-                sh 'docker build -t webcilsy .'
-                sh 'docker tag webcilsy ajjaiii/webcilsy:$BUILD_NUMBER'
+                sh 'docker build -t ajjaiii/webcilsy .'
+                sh 'docker tag ajjaiii/webcilsy ajjaiii/webcilsy:$BUILD_NUMBER'
+                sh 'docker push ajjaiii/webcilsy:latest'
                 sh 'docker push ajjaiii/webcilsy:$BUILD_NUMBER'
                 echo 'image has been build'
             }
@@ -16,16 +17,16 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploy New image to kubernetes'
-				sh 'sed -i "s/BUILD_NUMBER/$BUILD_NUMBER/g" webcilsy.yaml'
+                sh 'sed -i "s/BUILD_NUMBER/$BUILD_NUMBER/g" webcilsy.yaml'
                 sh 'kubectl apply -f webcilsy.yaml'
-				echo 'new image deployed'
+                echo 'new image deployed'
             }
         }
 		stage('Cleaning'){
             steps {
                 echo 'Cleaning images'
                 sh 'docker image prune -fa'
-				echo 'images cleaned'
+                echo 'images cleaned'
             }
         }
     }
