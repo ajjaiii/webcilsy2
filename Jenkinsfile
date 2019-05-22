@@ -7,8 +7,8 @@ pipeline {
         stage('Build') { 
             steps { 
                 echo 'Building New Image'
-                sh 'docker build -t webcilsypro .'
-                sh 'docker tag webcilsypro ajjaiii/webcilsypro:$BUILD_NUMBER'
+                sh 'docker build -t ajjaiii/webcilsypro .'
+                sh 'docker tag ajjaiii/webcilsypro ajjaiii/webcilsypro:$BUILD_NUMBER'
                 sh 'docker push ajjaiii/webcilsypro:$BUILD_NUMBER'
                 echo 'image has been build'
             }
