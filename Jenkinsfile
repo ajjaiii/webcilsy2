@@ -26,7 +26,7 @@ node ('master'){
 		stage 'Cleaning'
 			echo 'Cleaning image'
 			print "branch : ${env.BRANCH_NAME}"
-			sh 'docker images prune -fa'
+			sh 'docker image prune -fa'
 			echo 'image cleaned'
 			
 		stage 'Deploy'
