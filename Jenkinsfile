@@ -9,6 +9,7 @@ pipeline {
                 echo 'Building New Image'
                 sh 'docker build -t ajjaiii/webcilsy .'
                 sh 'docker tag ajjaiii/webcilsy ajjaiii/webcilsy:$BUILD_NUMBER'
+                sh 'docker login'
                 sh 'docker push ajjaiii/webcilsy:latest'
                 sh 'docker push ajjaiii/webcilsy:$BUILD_NUMBER'
                 echo 'image has been build'
