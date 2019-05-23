@@ -14,7 +14,6 @@ node ('master'){
 				print "Running on : ${env.NODE_NAME}"
 
 				echo 'Building Image'
-				sh 'sed -i "s/BUILD_NUMBER/$BUILD_NUMBER/g" webcilsy.yaml'
 				sh 'docker build . -t ajjaiii/webcilsypro'
 				sh 'docker tag ajjaiii/webcilsypro ajjaiii/webcilsypro:$BUILD_NUMBER'
                                 sh 'docker login'
@@ -23,15 +22,13 @@ node ('master'){
                                 echo 'image has been build'
 				
 			}
-		stage 'Cleaning'
-			echo 'Cleaning image'
-			print "branch : ${env.BRANCH_NAME}"
-			sh 'docker image prune -fa'
-			echo 'image cleaned'
-			
 		stage 'Deploy'
 			echo 'Deploying Aplication'
-			print "branch : ${env.BRANCH_NAME}"
+                        sh 'sed -i "s/BUILD_NUMBER/$BUILD_NUMBER/g" webcilsy.yaml'
 			sh 'kubectl apply -f webcilsy.yaml'
 			echo 'website deployed'
+                stage 'Cleaning'
+                        echo 'Cleaning image'
+                        sh 'docker image prune -fa'
+                        echo 'image cleaned'
 }
