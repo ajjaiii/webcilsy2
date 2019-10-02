@@ -7,6 +7,7 @@ pipeline {
         stage('Build') { 
             steps { 
                 echo 'Building New Image'
+                sh 'ls -al'
                 sh 'sed -i "s/BUILD_NUMBER/$BUILD_NUMBER/g" webcilsy.yaml'
                 sh 'docker build -t webcilsy .'
                 sh 'docker tag webcilsy ajjaiii/webcilsy:$BUILD_NUMBER'
