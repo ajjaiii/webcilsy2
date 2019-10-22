@@ -1,31 +1,51 @@
-pipeline { 
-    agent any 
-    options {
-        skipStagesAfterUnstable()
+pipeline {
+  
+  environment {
+    registry = "ajjaiii/myweb"
+    registryCredential = 'dockerhub'
+  }
+  
+  agent any
+  stages {
+
+    stage('Checkout update repo') {
+      steps {
+        git 'https://github.com/ajjaiii/playjenkins.git'
+      }
     }
-    stages {
-        stage('Build') { 
-            steps { 
-                echo 'Building New Image'
-                sh 'ls -al'
-                sh 'sed -i "s/BUILD_NUMBER/$BUILD_NUMBER/g" webcilsy.yaml'
-                sh 'docker build -t webcilsy .'
-                sh 'docker tag webcilsy ajjaiii/webcilsy:$BUILD_NUMBER'
-                sh 'docker push ajjaiii/webcilsy:$BUILD_NUMBER'
-               
-            }
+
+  stage('Build image') {
+      steps{
+        script {
+          dockerImage = docker.build registry + ":$BUILD_NUMBER"
         }
-        stage('Cleaning'){
-            steps {
-                echo 'Cleaning image'
-                sh 'docker image prune -fa'
-            }
+      }
+    }  
+  
+  stage('Push Docker Image') {
+  steps{
+    script {
+      docker.withRegistry( '', registryCredential ) {
+        dockerImage.push()
         }
-        stage('Deploy') {
-            steps {
-                echo 'Deploy New image to kubernetes'
-                sh 'kubectl apply -f webcilsy.yaml'
-            }
-        }
+      }
     }
+  }
+  
+  
+  stage('Deploy App to kubernetes') {
+      steps {
+        script {
+          kubernetesDeploy(configs: "myweb.yaml", kubeconfigId: "mykubeconfig")
+        }
+      }
+    }
+  
+  stage('Remove Unused docker image') {
+     steps{
+       sh "docker rmi $registry:$BUILD_NUMBER"
+       }
+     }  
+      
+  }
 }
