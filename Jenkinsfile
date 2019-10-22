@@ -10,7 +10,7 @@ pipeline {
 
     stage('Checkout update repo') {
       steps {
-        git 'https://github.com/ajjaiii/playjenkins.git'
+        git 'https://github.com/ajjaiii/webcilsy2.git'
       }
     }
 
@@ -36,7 +36,7 @@ pipeline {
   stage('Deploy App to kubernetes') {
       steps {
         script {
-          kubernetesDeploy(configs: "myweb.yaml", kubeconfigId: "mykubeconfig")
+          kubernetesDeploy(configs: "webcilsy.yaml", kubeconfigId: "mykubeconfig")
         }
       }
     }
