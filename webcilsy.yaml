@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: webcilsy
-        image: ajjaiii/webcilsy:BUILD_NUMBER
+        image: ajjaiii/webcilsy:$BUILD_NUMBER
         ports:
         - containerPort: 80
