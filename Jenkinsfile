@@ -1,7 +1,7 @@
 pipeline {
   
   environment {
-    registry = "ajjaiii/myweb"
+    registry = "ajjaiii/webcilsy"
     registryCredential = 'dockerhub'
   }
   
