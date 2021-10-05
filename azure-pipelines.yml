@@ -1,4 +1,5 @@
-pool: Default
-  vmImage: 'ubuntu-latest'
-steps:
-- bash: echo "Hello world"
+pool:
+  name: Default
+  demands:
+  - myCustomCapability   # check for existence of capability
+  - agent.os -equals Darwin  # check for specific string in capability
