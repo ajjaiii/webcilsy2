@@ -1,5 +1,7 @@
 pool:
   name: Default
   demands:
-  - myCustomCapability   # check for existence of capability
-  - agent.os -equals Darwin  # check for specific string in capability
+  - agent.os -equals Darwin
+  - anotherCapability -equals somethingElse
+steps:
+- script: echo hello world
